@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>经济图表分析（完整复习题）</title>
+    
+    <style>
+        /* 现代商务风格 - 蓝色、灰色和清晰的字体 */
+        :root {
+            --primary-color: #007bff; /* 商务蓝 */
+            --secondary-color: #6c757d; /* 灰色 */
+            --background-color: #f8f9fa; /* 浅灰色背景 */
+            --card-background: #ffffff; /* 卡片白 */
+            --text-color: #343a40; /* 深色文本 */
+            --option-color: #495057; /* 选项文本颜色 */
+            --correct-color: #28a745; /* 正确绿色 */
+            --incorrect-color: #dc3545; /* 错误红色 */
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+            font-size: 20px; /* 基础字体大小约20号大 */
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card-background);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            border-left: 5px solid var(--primary-color);
+            padding-left: 10px;
+            margin-top: 30px;
+        }
+        
+        h3 {
+             color: var(--primary-color);
+             margin-top: 25px;
+             padding-bottom: 5px;
+             border-bottom: 1px dashed #ced4da;
+        }
+
+        /* 学员信息表单样式 */
+        .info-form {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            margin-right: 15px;
+            min-width: 60px;
+        }
+
+        .form-group input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 18px;
+        }
+
+        /* 题目和选项样式 */
+        .question-block {
+            margin-bottom: 35px;
+            padding: 20px;
+            border-left: 4px solid var(--secondary-color);
+            background-color: #f1f3f5; /* 题目背景略有不同 */
+            border-radius: 6px;
+            line-height: 1.4;
+        }
+
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-color); /* 题目颜色 */
+            font-size: 22px;
+        }
+
+        .options label {
+            display: block;
+            margin-bottom: 10px;
+            cursor: pointer;
+            padding: 10px 15px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+            font-size: 20px;
+            color: var(--option-color); /* 选项颜色 */
+            line-height: 1.2; /* 行距约1.2 */
+        }
+
+        .options label:hover {
+            background-color: #e9ecef;
+        }
+
+        input[type="radio"] {
+            margin-right: 10px;
+            transform: scale(1.2); /* 放大单选框 */
+        }
+
+        /* 按钮样式 */
+        button {
+            padding: 12px 25px;
+            font-size: 18px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-right: 15px;
+        }
+
+        #start-btn, #submit-btn {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        #start-btn:hover, #submit-btn:hover {
+            background-color: #0056b3;
+        }
+
+        #reset-btn {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        #reset-btn:hover {
+            background-color: #5a6268;
+        }
+
+        .actions {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        /* 结果展示样式 */
+        .score-display {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-top: 10px;
+        }
+
+        #results {
+            margin-top: 40px;
+            padding: 25px;
+            border: 2px dashed var(--primary-color);
+            border-radius: 8px;
+        }
+
+        #final-score {
+            font-size: 28px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .review-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 6px;
+        }
+
+        .review-item.correct {
+            background-color: #e6ffed; /* 浅绿色背景 */
+            border: 1px solid var(--correct-color);
+        }
+
+        .review-item.incorrect {
+            background-color: #fdedf1; /* 浅红色背景 */
+            border: 1px solid var(--incorrect-color);
+        }
+
+        .review-item p {
+            margin: 5px 0;
+        }
+
+        .review-item .your-answer {
+            font-weight: bold;
+        }
+
+        .review-item .correct-answer {
+            color: var(--correct-color);
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📝 经济图表分析复习题</h1>
+            <p>第7专题 第1课 (共30题，满分10分)</p>
+            <p class="score-display" id="score-display">当前得分: 0 / 10</p>
+        </header>
+
+        <section class="info-form">
+            <h2>学员信息</h2>
+            <div class="form-group">
+                <label for="student-name">姓名:</label>
+                <input type="text" id="student-name" required>
+            </div>
+            <div class="form-group">
+                <label for="student-id">学号:</label>
+                <input type="text" id="student-id" required>
+            </div>
+            <button id="start-btn">开始测试</button>
+        </section>
+
+        <form id="quiz-form" class="quiz-container" style="display:none;">
+            </form>
+
+        <div class="actions">
+            <button id="submit-btn" style="display:none;">提交并查看结果</button>
+            <button id="reset-btn" style="display:none;">重新开始</button>
+        </div>
+
+        <section id="results" class="results-container" style="display:none;">
+            <h2>测试结果</h2>
+            <p id="final-score"></p>
+            <div id="answer-review">
+                </div>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const quizForm = document.getElementById('quiz-form');
+            const startBtn = document.getElementById('start-btn');
+            const submitBtn = document.getElementById('submit-btn');
+            const resetBtn = document.getElementById('reset-btn');
+            const resultsSection = document.getElementById('results');
+            const studentNameInput = document.getElementById('student-name');
+            const studentIdInput = document.getElementById('student-id');
+            const infoForm = document.querySelector('.info-form');
+            const scoreDisplay = document.getElementById('score-display');
+            
+            // --- 题目数据 ---
+
+            // I. 选择填空题 (10题)
+            const quizSectionI = [
+                { id: 'I-1', text: '在商务活动中，商务人士经常需要____经济情况，例如：宏观经济情况、公司销售状况、市场行情等。', options: { A: '比较', B: '描述', C: '统计', D: '预测' }, correct: 'B', source: 'cite: 4' },
+                { id: 'I-2', text: '图表作为一种说明经济情况的方式，因其清楚、____的特点而受商务人士青睐。', options: { A: '繁琐', B: '详细', C: '简练', D: '抽象' }, correct: 'C', source: 'cite: 5' },
+                { id: 'I-3', text: '一般的写作习惯是首先____图表，然后对该图表进行说明。', options: { A: '绘制', B: '比较', C: '想象', D: '列出' }, correct: 'D', source: 'cite: 6' },
+                { id: 'I-4', text: '仔细划分，____和____是两种信息表达方法。', options: { A: '语言，文字', B: '声音，图像', C: '图，表', D: '数据，公式' }, correct: 'C', source: 'cite: 7' },
+                { id: 'I-5', text: '表，即表格，数字按照一定的条件和要求进行排列就组成了一个____。', options: { A: '公式', B: '框架', C: '图形', D: '表格' }, correct: 'D', source: 'cite: 8' },
+                { id: 'I-6', text: '读者可以通过数字的横向和纵向比较，找出数字的____。', options: { A: '变化规律', B: '统计偏差', C: '预测趋势', D: '发展历史' }, correct: 'A', source: 'cite: 9' },
+                { id: 'I-7', text: '对表格的数字进行处理，采用____的形式表示出来就构成了图。', options: { A: '文字', B: '图形', C: '声音', D: '符号' }, correct: 'B', source: 'cite: 10' },
+                { id: 'I-8', text: '图形能更____地表示数字的变化规律。', options: { A: '间接地', B: '复杂地', C: '直观地', D: '抽象地' }, correct: 'C', source: 'cite: 11' },
+                { id: 'I-9', text: '在商务交际中，使用的图式很多，常见的有____图、柱状图、折线图等。', options: { A: '散点', B: '条形', C: '面积', D: '饼形' }, correct: 'D', source: 'cite: 12' },
+                { id: 'I-10', text: '在表格中，是先有____，后有____。', options: { A: '图，表', B: '概念，数据', C: '数据，结论', D: '表格，图' }, correct: 'D', source: 'cite: 13, 31' }
+            ];
+
+            // II. 书面词语与口语词语对应题 (10题 - 改编为单选题)
+            const quizSectionII = [
+                { id: 'II-1', text: '书面词语“描述”对应的口语词语是？', options: { A: '看见', B: '变化', C: '讲、说', D: '排队' }, correct: 'C', source: 'cite: 16, 33' },
+                { id: 'II-2', text: '书面词语“宏观”对应的口语词语是？', options: { A: '价格', B: '大的方面', C: '样子、情况', D: '上下' }, correct: 'B', source: 'cite: 16, 33' },
+                { id: 'II-3', text: '书面词语“状况”对应的口语词语是？', options: { A: '左右', B: '排队', C: '喜欢', D: '样子、情况' }, correct: 'D', source: 'cite: 16, 33' },
+                { id: 'II-4', text: '书面词语“行情”对应的口语词语是？', options: { A: '价格', B: '变化', C: '讲、说', D: '大的方面' }, correct: 'A', source: 'cite: 16, 33' },
+                { id: 'II-5', text: '书面词语“青睐”对应的口语词语是？', options: { A: '看见', B: '喜欢', C: '排队', D: '样子、情况' }, correct: 'B', source: 'cite: 16, 33' },
+                { id: 'II-6', text: '书面词语“排列”对应的口语词语是？', options: { A: '排队', B: '上下', C: '左右', D: '变化' }, correct: 'A', source: 'cite: 16, 33' },
+                { id: 'II-7', text: '书面词语“横向”对应的口语词语是？', options: { A: '上下', B: '大的方面', C: '左右', D: '价格' }, correct: 'C', source: 'cite: 16, 33' },
+                { id: 'II-8', text: '书面词语“纵向”对应的口语词语是？', options: { A: '变化', B: '上下', C: '左右', D: '喜欢' }, correct: 'B', source: 'cite: 16, 33' },
+                { id: 'II-9', text: '书面词语“变化规律”对应的口语词语是？', options: { A: '样子、情况', B: '排队', C: '变化', D: '讲、说' }, correct: 'C', source: 'cite: 16, 33' },
+                { id: 'II-10', text: '书面词语“看”对应的口语词语是？', options: { A: '看见', B: '价格', C: '大的方面', D: '左右' }, correct: 'A', source: 'cite: 16, 33' }
+            ];
+
+            // III. 组词成句题 (10题 - 改编为选择正确的完整句子)
+            const quizSectionIII = [
+                { id: 'III-1', text: '下列哪一句是正确的句子组合？(对应词语: 需要 / 经常 / 商务人士 / 描述 / 经济情况)', 
+                  options: { A: '经济情况经常需要描述商务人士', B: '商务人士经常需要描述经济情况', C: '需要经常商务人士描述经济情况', D: '经常描述商务人士需要经济情况' }, 
+                  correct: 'B', source: 'cite: 19, 35' },
+                { id: 'III-2', text: '下列哪一句是正确的句子组合？(对应词语: 图表 / 一种 / 经济情况 / 是一种 / 说明 / 的 / 方式)', 
+                  options: { A: '说明图表是一种经济情况的方式', B: '经济情况是一种说明图表的方式', C: '图表是一种说明经济情况的方式', D: '图表说明经济情况的一种方式是' }, 
+                  correct: 'C', source: 'cite: 20, 36' },
+                { id: 'III-3', text: '下列哪一句是正确的句子组合？(对应词语: 清楚、简练 / 特点 / 因其 / 图表 / 而受 / 青睐)', 
+                  options: { A: '图表因其清楚、简练的特点而受青睐', B: '清楚、简练的特点而受图表因其青睐', C: '图表而受青睐因其清楚、简练的特点', D: '特点因其清楚、简练图表而受青睐' }, 
+                  correct: 'A', source: 'cite: 21, 37' },
+                { id: 'III-4', text: '下列哪一句是正确的句子组合？(对应词语: 列出 / 对 / 该图表 / 说明 / 进行 / 首先 / 然后 / 图表)', 
+                  options: { A: '首先列出图表，然后对该图表进行说明', B: '然后对该图表进行说明，首先列出图表', C: '列出图表首先，说明进行然后对该图表', D: '该图表进行说明，首先然后列出图表' }, 
+                  correct: 'A', source: 'cite: 22, 38' },
+                { id: 'III-5', text: '下列哪一句是正确的句子组合？(对应词语: 图 / 表 / 和 / 两种 / 是 / 信息表达方法)', 
+                  options: { A: '信息表达方法是两种图和表', B: '图和表是两种信息表达方法', C: '两种图和表是信息表达方法', D: '是图和表信息表达方法两种' }, 
+                  correct: 'B', source: 'cite: 23, 39' },
+                { id: 'III-6', text: '下列哪一句是正确的句子组合？(对应词语: 表格 / 数字 / 一定的 / 按照 / 排列 / 条件和要求 / 组成)', 
+                  options: { A: '数字按照一定的排列条件和要求组成表格', B: '表格由数字按照一定的条件和要求组成', C: '表格按照一定的条件和要求由数字组成', D: '一定的条件和要求表格按照数字组成' }, 
+                  correct: 'C', source: 'cite: 24, 40' },
+                { id: 'III-7', text: '下列哪一句是正确的句子组合？(对应词语: 找出 / 读者 / 数字的 / 比较 / 变化规律 / 横向和纵向 / 通过)', 
+                  options: { A: '读者比较通过横向和纵向找出数字的变化规律', B: '读者通过横向和纵向比较找出数字的变化规律', C: '数字的变化规律找出读者通过横向和纵向比较', D: '横向和纵向通过比较读者找出数字的变化规律' }, 
+                  correct: 'B', source: 'cite: 25, 41' },
+                { id: 'III-8', text: '下列哪一句是正确的句子组合？(对应词语: 图形 / 出来 / 采用 / 数字 / 的 / 构成了 / 形式 / 表示 / 图)', 
+                  options: { A: '采用图形的形式表示数字构成了图', B: '数字的形式表示采用图形构成了图', C: '图形的形式构成了图表示采用数字', D: '图构成了采用图形的形式表示数字' }, 
+                  correct: 'A', source: 'cite: 26, 42' },
+                { id: 'III-9', text: '下列哪一句是正确的句子组合？(对应词语: 图形 / 数字的 / 变化规律 / 表示 / 能 / 更直观地)', 
+                  options: { A: '能表示图形数字的更直观地变化规律', B: '数字的变化规律能图形更直观地表示', C: '图形能更直观地表示数字的变化规律', D: '更直观地表示图形数字的变化规律能' }, 
+                  correct: 'C', source: 'cite: 27, 43' },
+                { id: 'III-10', text: '下列哪一句是正确的句子组合？(对应词语: 常见的 / 折线图 / 柱状图 / 饼形图 / 等 / 有)', 
+                  options: { A: '常见的有折线图、柱状图、饼形图等', B: '有折线图、柱状图、饼形图等常见的', C: '常见的有饼形图、柱状图、折线图等', D: '饼形图、柱状图、折线图等常见的有' }, 
+                  correct: 'C', source: 'cite: 28, 44' }
+            ];
+            
+            // 合并所有题目
+            const allQuizData = [
+                { title: '一、选择填空（共 10 题）', data: quizSectionI },
+                { title: '二、书面词语与对应口语词语连线（改编为单选，共 10 题）', data: quizSectionII },
+                { title: '三、组词成句（改编为单选，共 10 题）', data: quizSectionIII }
+            ];
+
+            const totalQuestions = quizSectionI.length + quizSectionII.length + quizSectionIII.length;
+
+            // --- 核心函数 ---
+
+            /**
+             * 随机打乱数组顺序
+             * @param {Array} array 
+             */
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+            }
+
+            /**
+             * 生成测试题HTML
+             */
+            function generateQuiz() {
+                quizForm.innerHTML = ''; // 清空原有内容
+                let questionCounter = 1;
+                
+                // 确保每次加载时，题目大项的顺序不变，但每项内题目随机
+                allQuizData.forEach(section => {
+                    const sectionTitle = document.createElement('h3');
+                    sectionTitle.textContent = section.title;
+                    quizForm.appendChild(sectionTitle);
+                    
+                    const questions = [...section.data];
+                    shuffleArray(questions); // 打乱每部分内部题目顺序
+
+                    questions.forEach(q => {
+                        const questionBlock = document.createElement('div');
+                        questionBlock.className = 'question-block';
+                        questionBlock.dataset.id = q.id;
+
+                        const questionText = document.createElement('p');
+                        questionText.className = 'question-text';
+                        // 使用全局计数器作为题号
+                        questionText.innerHTML = `${questionCounter++}. ${q.text} <span class="citation"></span>`; 
+                        questionBlock.appendChild(questionText);
+
+                        const optionsDiv = document.createElement('div');
+                        optionsDiv.className = 'options';
+                        
+                        // 动态生成选项
+                        const optionKeys = Object.keys(q.options);
+                        optionKeys.forEach(key => {
+                            const label = document.createElement('label');
+                            label.innerHTML = `
+                                <input type="radio" name="question-${q.id}" value="${key}">
+                                ${key}. ${q.options[key]}
+                            `;
+                            optionsDiv.appendChild(label);
+                        });
+
+                        questionBlock.appendChild(optionsDiv);
+                        quizForm.appendChild(questionBlock);
+                    });
+                });
+            }
+
+            /**
+             * 检查答案并计算分数
+             */
+            function checkAnswers() {
+                let score = 0;
+                const questionValue = 10 / totalQuestions; // 每题分数
+                const reviewHTML = [];
+                
+                // 合并所有题目的原始数据，方便查询答案
+                const allQuestionsFlat = [...quizSectionI, ...quizSectionII, ...quizSectionIII];
+
+                allQuestionsFlat.forEach(q => {
+                    const selectedOption = document.querySelector(`input[name="question-${q.id}"]:checked`);
+                    const isCorrect = selectedOption && selectedOption.value === q.correct;
+                    const reviewClass = isCorrect ? 'correct' : 'incorrect';
+                    const userAnswer = selectedOption ? selectedOption.value : '未作答';
+                    const questionNumberElement = document.querySelector(`[data-id="${q.id}"] .question-text`);
+                    const questionNumber = questionNumberElement ? questionNumberElement.textContent.split('.')[0] : q.id;
+                    
+                    if (isCorrect) {
+                        score += questionValue;
+                    }
+
+                    // 构造答案解析
+                    reviewHTML.push(`
+                        <div class="review-item ${reviewClass}">
+                            <p class="question-text">${questionNumber}. ${q.text}</p>
+                            <p class="your-answer">您的答案: ${userAnswer}. ${q.options[userAnswer] || ''}</p>
+                            <p class="correct-answer">正确答案: ${q.correct}. ${q.options[q.correct]}</p>
+                        </div>
+                    `);
+                });
+
+                // 四舍五入到一位小数（确保总分是10）
+                const finalScore = Math.round(score * 10) / 10;
+                
+                // 显示结果
+                document.getElementById('final-score').textContent = `学员: ${studentNameInput.value} (学号: ${studentIdInput.value}) - 最终得分: ${finalScore} / 10`;
+                document.getElementById('answer-review').innerHTML = reviewHTML.join('');
+                scoreDisplay.textContent = `最终得分: ${finalScore} / 10`;
+
+                quizForm.style.display = 'none';
+                submitBtn.style.display = 'none';
+                resetBtn.style.display = 'inline-block';
+                resultsSection.style.display = 'block';
+            }
+
+            /**
+             * 重置测试
+             */
+            function resetQuiz() {
+                quizForm.reset();
+                infoForm.style.display = 'block';
+                quizForm.style.display = 'none';
+                submitBtn.style.display = 'none';
+                resetBtn.style.display = 'none';
+                resultsSection.style.display = 'none';
+                scoreDisplay.textContent = '当前得分: 0 / 10';
+                studentNameInput.value = '';
+                studentIdInput.value = '';
+            }
+
+            // --- 事件监听器 ---
+
+            /**
+             * 开始测试
+             */
+            startBtn.addEventListener('click', function() {
+                if (!studentNameInput.value.trim() || !studentIdInput.value.trim()) {
+                    alert('请先填写姓名和学号!');
+                    return;
+                }
+
+                // 隐藏信息填写，显示题目
+                infoForm.style.display = 'none';
+                quizForm.style.display = 'block';
+                submitBtn.style.display = 'inline-block';
+                resultsSection.style.display = 'none';
+                scoreDisplay.textContent = '当前得分: 待提交';
+
+                // 重新生成题目（实现随机顺序）
+                generateQuiz();
+            });
+
+            // 提交按钮事件
+            submitBtn.addEventListener('click', function(event) {
+                event.preventDefault();
+                checkAnswers();
+            });
+
+            // 重新开始按钮事件
+            resetBtn.addEventListener('click', resetQuiz);
+
+            // 初始设置：只显示信息填写
+            infoForm.style.display = 'block';
+            quizForm.style.display = 'none';
+            submitBtn.style.display = 'none';
+            resetBtn.style.display = 'none';
+            resultsSection.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
